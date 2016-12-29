@@ -1,0 +1,767 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Structure\_de\_donnees\_integrees}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Utilisation des listes sous forme stacks
+(piles)}\label{utilisation-des-listes-sous-forme-stacks-piles}
+
+Les méthodes de liste rendent très facile d'utiliser une liste comme une
+pile, où le dernier élément ajouté est le premier élément récupéré
+(«dernier entré, premier sorti»). Pour ajouter un élément au sommet de
+la pile, utilisez append (). Pour récupérer un élément du haut de la
+pile, utilisez pop () sans index explicite. Par exemple:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}70}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}
+         \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+         \PY{l+m+mi}{7}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}
+         \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+         \PY{l+m+mi}{6}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+         \PY{l+m+mi}{5}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{stack}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}70}]:} [3, 4]
+\end{Verbatim}
+        
+    \section{\texorpdfstring{Utilisation des listes en tant que ``queues''
+(files
+d'attente)}{Utilisation des listes en tant que queues (files d'attente)}}\label{utilisation-des-listes-en-tant-que-queues-files-dattente}
+
+Il est également possible d'utiliser une liste comme une file d'attente,
+où le premier élément ajouté est le premier élément récupéré («premier
+entré, premier sorti»); Cependant, les listes ne sont pas efficaces à
+cette fin. Alors que les appends et pops de la fin de la liste sont
+rapides, faire des appends ou pops depuis le début d'une liste est lent
+(car tous les autres éléments doivent être décalés d'un seul coup).
+
+Pour implémenter une file d'attente, utilisez ``collections.deque'' qui
+a été conçu pour avoir des appends rapides et pops des deux extrémités.
+Par exemple:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{deque}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue} \PY{o}{=} \PY{n}{deque}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Eric}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{John}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Michael}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Terry}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}           \PY{c+c1}{\PYZsh{} Terry arrive}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Graham}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}          \PY{c+c1}{\PYZsh{} Graham arrive}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue}\PY{o}{.}\PY{n}{popleft}\PY{p}{(}\PY{p}{)}                 \PY{c+c1}{\PYZsh{} Le premier qui est arrivé part}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Eric}\PY{l+s+s1}{\PYZsq{}}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue}\PY{o}{.}\PY{n}{popleft}\PY{p}{(}\PY{p}{)}                 \PY{c+c1}{\PYZsh{} Le deuxième qui est arrivé part}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{John}\PY{l+s+s1}{\PYZsq{}}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{queue}                           \PY{c+c1}{\PYZsh{} Renvoie la file d\PYZsq{}attente par ordre des arrivées}
+         \PY{n}{deque}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Michael}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Terry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Graham}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}71}]:} deque(['Michael', 'Terry', 'Graham'])
+\end{Verbatim}
+        
+    \section{Les listes de
+compréhensions}\label{les-listes-de-compruxe9hensions}
+
+Les listes compréhensions fournissent un moyen concis de créer des
+listes. Les applications courantes sont de faire de nouvelles listes où
+chaque élément est le résultat de certaines opérations appliquées à
+chaque membre d'une autre séquence ou itérables, ou de créer une
+sous-séquence de ces éléments qui satisfont une certaine condition.
+
+Par exemple, supposons que nous voulons créer une liste de carrés, comme
+suit:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{squares} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{n}{squares}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{squares}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}72}]:} [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\end{Verbatim}
+        
+    On peut obtenir le même résultat avec :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{squares} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{squares}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}73}]:} [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\end{Verbatim}
+        
+    Une liste compréhension se compose de crochets contenant une expression
+suivie par une clause for ou if. Le résultat sera une nouvelle liste
+résultant de l'évaluation de l'expression dans le contexte des clauses
+for et if qui la suivent. Par exemple, cette listcomp combine les
+éléments de deux listes s'ils ne sont pas égaux:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]} \PY{k}{if} \PY{n}{x} \PY{o}{!=} \PY{n}{y}\PY{p}{]}
+         \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}74}]:} [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+\end{Verbatim}
+        
+    Qui est équivalent à :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{combs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{:}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{:}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}         \PY{k}{if} \PY{n}{x} \PY{o}{!=} \PY{n}{y}\PY{p}{:}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}             \PY{n}{combs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{)}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{combs}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}75}]:} [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+\end{Verbatim}
+        
+    Notez comment l'ordre des instructions for et if est le même dans ces
+deux extraits.
+
+Si l'expression est un tuple (par exemple (x, y) dans l'exemple
+précédent), elle doit être entre parenthèses.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{vec} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Créé une nouvelle liste avec des valeurs doublé}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n}{x}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec}\PY{p}{]}
+         \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Filtre la liste pour exclure les nombres négatifs}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec} \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{]}
+         \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Applique une fonction à tous les éléments}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec}\PY{p}{]}
+         \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Appel la methode sur chaque éléments}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{freshfruit} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  loganberry }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{passion fruit  }\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n}{weapon}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{weapon} \PY{o+ow}{in} \PY{n}{freshfruit}\PY{p}{]}
+         \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loganberry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{passion fruit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Créé une liste de 2\PYZhy{}tuples comme (number, square)}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{]}
+         \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{)}\PY{p}{]}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Le tuple doit être entre parenthèse, sinon une erreur est lévée}
+         \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+          File "<ipython-input-76-25774bc1b033>", line 19
+        [x, x**2 for x in range(6)]
+                   \^{}
+    SyntaxError: invalid syntax
+    
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Aplati une liste en utilisant un listcomp avec deux \PYZsq{}for\PYZsq{}}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{vec} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{]}\PY{p}{]}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n}{num} \PY{k}{for} \PY{n}{elem} \PY{o+ow}{in} \PY{n}{vec} \PY{k}{for} \PY{n}{num} \PY{o+ow}{in} \PY{n}{elem}\PY{p}{]}
+\end{Verbatim}
+
+    Les listes compréhensions peuvent contenir des expressions complexes et
+des fonctions imbriquées:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{pi}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{pi}\PY{p}{,} \PY{n}{i}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{]}
+        \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.14}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.142}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.1416}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.14159}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \section{Les listes imbriquées de
+compréhensions}\label{les-listes-imbriquuxe9es-de-compruxe9hensions}
+
+L'expression initiale dans une liste de compréhension peut être
+n'importe quelle expression arbitraire, y compris une autre liste de
+compréhension.
+
+Considérons l'exemple suivant d'une matrice 3x4 implémentée comme une
+liste de 3 listes de longueur 4:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{matrix} \PY{o}{=} \PY{p}{[}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}\PY{p}{,}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{p}{[}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.} \PY{p}{]}
+\end{Verbatim}
+
+    La liste suivante transposera les lignes et les colonnes
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{[}\PY{p}{[}\PY{n}{row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{matrix}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+    Comme nous l'avons vu dans la section précédente, le listcomp imbriqué
+est évalué dans le contexte du for qui le suit, donc cet exemple est
+équivalent à:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{transposed} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{n}{transposed}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{matrix}\PY{p}{]}\PY{p}{)}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{transposed}
+\end{Verbatim}
+
+    Qui, à son tour, est la même que:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{transposed} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{c+c1}{\PYZsh{} Les 3 lignes suivantes implémentent une listcomp imbriqué}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{n}{transposed\PYZus{}row} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{matrix}\PY{p}{:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}         \PY{n}{transposed\PYZus{}row}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}     \PY{n}{transposed}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{transposed\PYZus{}row}\PY{p}{)}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{transposed}
+\end{Verbatim}
+
+    Dans le monde réel, on préférera les fonctions intégrées aux
+instructions de flux complexes. La fonction zip () ferait un excellent
+travail pour ce cas d'utilisation:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{matrix}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \section{Tuples et séquences}\label{tuples-et-suxe9quences}
+
+Nous avons vu que les listes et les chaînes ont de nombreuses propriétés
+communes, telles que l'indexation et les opérations de découpage. Il
+s'agit de deux exemples de types de données de séquence (voir Types de
+séquences - liste, tuple, plage). Puisque Python est un langage
+évolutif, d'autres types de données de séquence peuvent être ajoutés. Il
+existe également un autre type de données de séquence standard: le
+tuple.
+
+Un tuple se compose d'un certain nombre de valeurs séparées par des
+virgules, par exemple
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{12345}\PY{p}{,} \PY{l+m+mi}{54321}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hello!}\PY{l+s+s1}{\PYZsq{}}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{t}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Les tuples peuvent être imbriqué:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.} \PY{n}{u} \PY{o}{=} \PY{n}{t}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{u}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Les tuple sont immuables:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.} \PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{88888}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Mais ils peuvent contenir des objets mutable:}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.} \PY{n}{v} \PY{o}{=} \PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{v}
+\end{Verbatim}
+
+    Comme vous le voyez, les tuples de sortie sont toujours entre
+parenthèses, de sorte que les tuples imbriqués soit interprétés
+correctement. Ils peuvent être entrés avec ou sans parenthèses
+entourant, bien que souvent des parenthèses soient nécessaires de toute
+façon (si le tuple fait partie d'une expression plus grande). Il n'est
+pas possible d'attribuer aux éléments individuels d'un tuple, mais il
+est possible de créer des tuples qui contiennent des objets mutables,
+tels que des listes.
+
+Bien que les tuples peuvent sembler similaires aux listes, ils sont
+souvent utilisés dans des situations différentes et à des fins
+différentes. Les tuples sont immuables et contiennent généralement une
+séquence hétérogène d'éléments qui sont accessibles via le déballage
+(voir plus loin dans cette section) ou l'indexation (ou même par
+attribut dans le cas de namedpleples). Les listes sont mutables, et
+leurs éléments sont généralement homogènes et sont accessibles par
+itération sur la liste.
+
+Un problème particulier est la construction de tuples contenant 0 ou 1
+éléments: la syntaxe a quelques bizarreries supplémentaires pour les
+accommoder. Les tuples vides sont construits par une paire vide de
+parenthèses. Un tuple avec un élément est construit en suivant une
+valeur avec une virgule (il ne suffit pas d'entourer une seule valeur
+entre parenthèses). Moche, mais efficace. Par exemple:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{empty} \PY{o}{=} \PY{p}{(}\PY{p}{)}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{singleton} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hello}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}    \PY{c+c1}{\PYZsh{} \PYZlt{}\PYZhy{}\PYZhy{} notez la virgule}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{empty}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{singleton}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{singleton}
+\end{Verbatim}
+
+    La déclaration t = 12345, 54321, `bonjour!' Est un exemple d'emballage
+de tuples: les valeurs 12345, 54321 et `hello!' Sont emballés ensemble
+dans un tuple. L'inversion est également possible:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{z} \PY{o}{=} \PY{n}{t}
+\end{Verbatim}
+
+    C'est ce qu'on appelle, de façon appropriée, séquence de déballage et
+fonctionne pour n'importe quelle séquence sur le côté droit. Le
+déballage des séquences exige qu'il y ait autant de variables sur le
+côté gauche du signe égal que d'éléments dans la séquence. Notez que
+l'assignation multiple est vraiment juste une combinaison de l'emballage
+de tuple et déballage de séquence.
+
+    \section{Les sets}\label{les-sets}
+
+Python inclut également un type de données pour les ensembles. Un
+ensemble est une collection non ordonnée sans éléments dupliqués. Les
+utilisations de base comprennent les tests d'adhésion et l'élimination
+des entrées en double. Les objets définis prennent également en charge
+des opérations mathématiques telles que l'union, l'intersection, la
+différence et la différence symétrique.
+
+Les accolades ou la fonction set () peuvent être utilisées pour créer
+des ensembles. Remarque: pour créer un jeu vide, vous devez utiliser set
+(), not \{\}; Ce dernier crée un dictionnaire vide, une structure de
+données dont nous discuterons dans la section suivante.
+
+Voici une brève démonstration:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{basket} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{print}\PY{p}{(}\PY{n}{basket}\PY{p}{)}  
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{basket} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{crabgrass}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{basket}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{c+c1}{\PYZsh{} Démontre des opérations sur des lettres uniques à partir de deux mots}
+        \PY{o}{.}\PY{o}{.}\PY{o}{.}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abracadabra}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{b} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alacazam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a}      
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{\PYZhy{}} \PY{n}{b}                              \PY{c+c1}{\PYZsh{} Les lettres dans a mais pas dans b}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{|} \PY{n}{b}                              \PY{c+c1}{\PYZsh{} lettres ni dans a ou b}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{\PYZam{}} \PY{n}{b}                              \PY{c+c1}{\PYZsh{} lettres dans a et b}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{\PYZca{}} \PY{n}{b}                              \PY{c+c1}{\PYZsh{} lettres dans a ou b mais pas dans les deux}
+\end{Verbatim}
+
+    De la même manière que pour la liste des compréhensions, les ensembles
+de compréhensions sont également pris en charge:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abracadabra}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{x} \PY{o+ow}{not} \PY{o+ow}{in} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{a}
+\end{Verbatim}
+
+    \section{Les dictionnaires}\label{les-dictionnaires}
+
+Un autre type de données utile intégré à Python est le dictionnaire
+(voir Types de mappage - dict). Les dictionnaires sont parfois trouvés
+dans d'autres langues comme «mémoires associatives» ou «tableaux
+associatifs». Contrairement aux séquences, qui sont indexées par une
+plage de nombres, les dictionnaires sont indexés par des clés, qui
+peuvent être n'importe quel type immuable; Les chaînes et les nombres
+peuvent toujours être des clés. Les tuples peuvent être utilisés comme
+des clés si elles ne contiennent que des chaînes, des nombres ou des
+tuples; Si un tuple contient un objet mutable directement ou
+indirectement, il ne peut pas être utilisé comme clé. Vous ne pouvez pas
+utiliser les listes comme clés, car les listes peuvent être modifiées en
+place à l'aide d'affectations d'index, d'affectations de tranches ou de
+méthodes comme append () et extend ().
+
+Il est préférable de penser à un dictionnaire comme un ensemble non
+désordonné de paires clé: valeur, avec l'exigence que les clés sont
+uniques (dans un dictionnaire). Une paire d'accolades crée un
+dictionnaire vide: \{\}. Placer une liste séparée par des virgules de
+paires clé: valeur dans les accolades ajoute des paires clé: valeur au
+dictionnaire. C'est aussi la façon dont les dictionnaires sont écrits à
+la sortie.
+
+Les principales opérations sur un dictionnaire sont stocker une valeur
+avec une certaine clé et d'extraire la valeur donnée la clé. Il est
+également possible de supprimer une paire clé: valeur avec del. Si vous
+stockez en utilisant une clé déjà utilisée, l'ancienne valeur associée à
+cette clé est oubliée. Il s'agit d'une erreur pour extraire une valeur à
+l'aide d'une clé inexistante.
+
+La liste d'exécution (d.keys ()) sur un dictionnaire retourne une liste
+de toutes les clés utilisées dans le dictionnaire, dans un ordre
+arbitraire (si vous voulez trier, il suffit d'utiliser trié (d.keys
+())). {[}2{]} Pour vérifier si une seule clé est dans le dictionnaire,
+utilisez le mot clé ``in''.
+
+Voici un petit exemple utilisant un dictionnaire:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{tel} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4098}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4139}\PY{p}{\PYZcb{}}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{tel}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{guido}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{4127}
+        \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{tel}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{tel}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{quote}
+\begin{quote}
+\begin{quote}
+del tel{[}`sape'{]} tel{[}`irv'{]} = 4127 tel
+\end{quote}
+\end{quote}
+\end{quote}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{list}\PY{p}{(}\PY{n}{tel}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{tel}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{guido}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{tel}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{tel}
+\end{Verbatim}
+
+    Le constructeur dict () construit des dictionnaires directement à partir
+de séquences de paires clé-valeur:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{p}{\PYZob{}}\PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+    Lorsque les clés sont des chaînes simples, il est parfois plus facile de
+spécifier des paires en utilisant des arguments de mots clés:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZgt{}\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{sape}\PY{o}{=}\PY{l+m+mi}{4139}\PY{p}{,} \PY{n}{guido}\PY{o}{=}\PY{l+m+mi}{4127}\PY{p}{,} \PY{n}{jack}\PY{o}{=}\PY{l+m+mi}{4098}\PY{p}{)}
+\end{Verbatim}
+
+    \section{Référence}\label{ruxe9fuxe9rence}
+
+https://docs.python.org/3.3/tutorial/datastructures.html
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
